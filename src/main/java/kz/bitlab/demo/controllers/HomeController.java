@@ -19,8 +19,9 @@ public class HomeController {
 
     @PostMapping(value = "/add-magazine")
     String addNewMagazine(@RequestParam(name = "magazineName") String name,
-                          @RequestParam(name = "magazineDescription") String description) {
-        Magazine magazine = new Magazine(null, name, description);
+                          @RequestParam(name = "magazineDescription") String description,
+                          @RequestParam(name = "magazinePrice") double price) {
+        Magazine magazine = new Magazine(null, name, description, price);
         DBManager.addMagazine(magazine);
         return "redirect:/";
     }
