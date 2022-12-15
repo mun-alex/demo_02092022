@@ -13,7 +13,7 @@
 <div class="container">
   <nav class="navbar navbar-expand-lg bg-secondary">
     <div class="container-fluid">
-      <a class="navbar-brand text-white fw-bold" href="#">BITLAB MAGAZINE</a>
+      <a class="navbar-brand text-white fw-bold" th:href="@{'/'}">BITLAB MAGAZINE</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -23,7 +23,7 @@
             <a class="nav-link text-white" aria-current="page" th:href="@{'/magazines'}">Magazines</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-white" aria-current="page" href="#">Home</a>
+            <a class="nav-link text-white" aria-current="page" th:href="@{'/'}">Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link text-white" href="#">News</a>
@@ -41,7 +41,7 @@
   <div layout:fragment="content">
 
   </div>
-  <footer class="mt-5">
+  <footer class="mt-5 fixed-bottom">
     <div class="row">
       <div class="col-lg-12">
         <h3 class="bg-secondary text-white text-center p-3 fs-6">2022 BITLAB all rights reserved</h3>
@@ -49,35 +49,5 @@
     </div>
   </footer>
 </div>
-
-<!-- Modal -->
-<div class="modal fade" id="addMagazine" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form th:action="@{'/add-magazine'}" method="post">
-          <div class="mb-3">
-            <label for="magazineName" class="form-label">Name</label>
-            <input type="text" class="form-control" id="magazineName" aria-describedby="emailHelp" name="magazineName">
-          </div>
-          <div class="mb-3">
-            <label for="magazineDescription" class="form-label">Description</label>
-            <input type="text" class="form-control" id="magazineDescription" name="magazineDescription">
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Add</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-
 </body>
 </html>

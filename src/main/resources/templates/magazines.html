@@ -5,62 +5,65 @@
       layout:decorate="layouts/main">
 
 <body>
-<div layout:fragment="content" class="row mt-5 align-items-end">
+<div layout:fragment="content">
   <!-- Button trigger modal -->
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addMagazine">
+  <button type="button" class="btn btn-primary mt-5" data-bs-toggle="modal" data-bs-target="#addMagazine">
     + Add
   </button>
-  <table class="table">
-    <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Name</th>
-      <th scope="col">Description</th>
-      <th scope="col">Price</th>
-      <th scope="col">Details</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="magazine : ${magazineList}">
-      <th scope="row" th:text="${magazine.id}"></th>
-      <td th:text="${magazine.name}"></td>
-      <td th:text="${magazine.description}"></td>
-      <td th:if="${magazine.price >= 2000}" style="color: red;" th:text="${magazine.price} + ' KZT'"></td>
-      <td th:unless="${magazine.price >= 2000}" style="color: green;" th:text="${magazine.price} + ' KZT'"></td>
-      <td><a href="" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editMagazine">details</a></td>
-    </tr>
-    </tbody>
-  </table>
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="editMagazine" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form th:action="@{'/add-magazine'}" method="post">
-          <div class="mb-3">
-            <label for="magazineName" class="form-label">Name</label>
-            <input type="text" class="form-control" id="magazineName" aria-describedby="emailHelp" name="magazineName">
-          </div>
-          <div class="mb-3">
-            <label for="magazineDescription" class="form-label">Description</label>
-            <input type="text" class="form-control" id="magazineDescription" name="magazineDescription">
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Add</button>
-          </div>
-        </form>
+  <div class="row mt-5 align-items-end">
+    <table class="table">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Description</th>
+        <th scope="col">Price</th>
+        <th scope="col">Details</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="magazine : ${magazineList}">
+        <th scope="row" th:text="${magazine.id}"></th>
+        <td th:text="${magazine.name}"></td>
+        <td th:text="${magazine.description}"></td>
+        <td th:if="${magazine.price >= 2000}" style="color: red;" th:text="${magazine.price} + ' KZT'"></td>
+        <td th:unless="${magazine.price >= 2000}" style="color: green;" th:text="${magazine.price} + ' KZT'"></td>
+        <td><a th:href="@{'/magazines/details/' + ${magazine.id}}" class="btn btn-primary">details</a></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="addMagazine" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Magazine</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form th:action="@{'/magazines/add-magazine'}" method="post">
+            <div class="mb-3">
+              <label for="magazineName" class="form-label">Name</label>
+              <input type="text" class="form-control" id="magazineName" aria-describedby="emailHelp" name="magazineName">
+            </div>
+            <div class="mb-3">
+              <label for="magazineDescription" class="form-label">Description</label>
+              <input type="text" class="form-control" id="magazineDescription" name="magazineDescription">
+            </div>
+            <div class="mb-3">
+              <label for="magazinePrice" class="form-label">Price</label>
+              <input type="number" class="form-control" id="magazinePrice" name="magazinePrice">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Add</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-
 </body>
 </html>

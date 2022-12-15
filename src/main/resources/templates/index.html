@@ -6,46 +6,13 @@
 
 <body>
 <div layout:fragment="content" class="row mt-5 align-items-end">
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addMagazine">
-        + Add
-    </button>
-
     <div th:each="magazine : ${magazineList}" class="col-lg-3">
-        <h5 th:text="${magazine.getName()}"></h5>
-        <p th:text="${magazine.getDescription()}"></p>
-        <a href="#" class="btn btn-success mt-2">open for read</a>
-    </div>
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="addMagazine" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form th:action="@{'/add-magazine'}" method="post">
-                    <div class="mb-3">
-                        <label for="magazineName" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="magazineName" aria-describedby="emailHelp" name="magazineName">
-                    </div>
-                    <div class="mb-3">
-                        <label for="magazineDescription" class="form-label">Description</label>
-                        <input type="text" class="form-control" id="magazineDescription" name="magazineDescription">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Add</button>
-                    </div>
-                </form>
-            </div>
+        <div class="p-3 mt-2 border border-dark border-2 rounded">
+            <h5 th:text="${magazine.getName()}"></h5>
+            <p th:text="${magazine.getDescription()}"></p>
+            <a href="#" class="btn btn-success mt-2">open for read</a>
         </div>
     </div>
 </div>
-
-
 </body>
 </html>
