@@ -26,4 +26,16 @@ public class DBManager {
         magazineList.add(magazine);
         id++;
     }
+
+    public static Magazine getMagazineById(Long id) {
+        return magazineList.get(Integer.parseInt(id.toString()));
+    }
+
+    public static void updateMagazine(Magazine magazine) {
+        magazineList.set(Integer.parseInt(magazine.getId().toString()), magazine);
+    }
+
+    public static void deleteMagazine(Long id) {
+        magazineList.remove(Integer.parseInt(id.toString()));
+    }
 }
