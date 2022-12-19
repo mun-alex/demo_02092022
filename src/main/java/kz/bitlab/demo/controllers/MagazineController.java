@@ -2,7 +2,9 @@ package kz.bitlab.demo.controllers;
 
 import kz.bitlab.demo.db.DBManager;
 import kz.bitlab.demo.models.Magazine;
+import kz.bitlab.demo.repositories.MagazineRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,9 +14,16 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class MagazineController {
 
+    @Autowired
+    private MagazineRepository magazineRepository;
+
+    @Autowired
+    private Magazine magazine;
+
     @GetMapping
     String getIndex(Model model) {
-        model.addAttribute("magazineList", DBManager.getAllMagazines());
+//        model.addAttribute("magazineList", DBManager.getAllMagazines());
+        model.addAttribute("magazineList", magazineRepository.findAll());
         return "magazines";
     }
 
@@ -22,8 +31,14 @@ public class MagazineController {
     String addNewMagazine(@RequestParam(name = "magazineName") String name,
                           @RequestParam(name = "magazineDescription") String description,
                           @RequestParam(name = "magazinePrice") double price) {
-        Magazine magazine = new Magazine(null, name, description, price);
-        DBManager.addMagazine(magazine);
+//        Magazine magazine = new Magazine(null, name, description, price);
+        magazine.setId(null);
+        magazine.setName(name);
+        magazine.setDescription(description);
+        magazine.setPrice(price);
+        magazineRepository.save(magazine);
+//        DBManager.addMagazine(magazine);
+//        MagazineRepositoryImpl magazineRepository = new MagazineRepositoryImpl();
         return "redirect:/magazines";
     }
 
