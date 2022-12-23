@@ -55,6 +55,11 @@
               <label for="magazinePrice" class="form-label">Price</label>
               <input type="number" class="form-control" id="magazinePrice" name="magazinePrice">
             </div>
+            <div class="mb-3">
+              <select class="form-select" aria-label="Default select example" name="publishing">
+                <option th:each="publishing : ${publishingList}" th:value="${publishing.id}" th:text="${publishing.name}"></option>
+              </select>
+            </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
               <button type="submit" class="btn btn-primary">Add</button>

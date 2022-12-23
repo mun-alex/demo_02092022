@@ -23,4 +23,6 @@ public class Magazine {
     private String description;
     @Column(name = "price")
     private double price;
+    @ManyToOne
+    private Publishing publishing;
 }
