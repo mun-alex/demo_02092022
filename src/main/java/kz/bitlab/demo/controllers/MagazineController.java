@@ -2,8 +2,8 @@ package kz.bitlab.demo.controllers;
 
 import kz.bitlab.demo.db.DBManager;
 import kz.bitlab.demo.models.Magazine;
-import kz.bitlab.demo.repositories.MagazineRepository;
-import kz.bitlab.demo.repositories.PublishingRepository;
+import kz.bitlab.demo.services.MagazineService;
+import kz.bitlab.demo.services.PublishingService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.*;
 public class MagazineController {
 
     @Autowired
-    private MagazineRepository magazineRepository;
+    private MagazineService magazineService;
 
     @Autowired
-    private PublishingRepository publishingRepository;
+    private PublishingService publishingService;
 
     @Autowired
     private Magazine magazine;
@@ -27,8 +27,9 @@ public class MagazineController {
     @GetMapping
     String getIndex(Model model) {
 //        model.addAttribute("magazineList", DBManager.getAllMagazines());
-        model.addAttribute("magazineList", magazineRepository.findAll());
-        model.addAttribute("publishingList", publishingRepository.findAll());
+
+        model.addAttribute("magazineList", magazineService.getAllMagazines());
+        model.addAttribute("publishingList", publishingService.getAllPublishings());
         return "magazines";
     }
 
@@ -39,14 +40,15 @@ public class MagazineController {
                           @RequestParam(name = "publishing") Long publishingId) {
 //        Magazine magazine = new Magazine(null, name, description, price);
 //        Publishing publishing = publishingRepository.findById(publishingId).orElseThrow();
+//        DBManager.addMagazine(magazine);
+//        MagazineRepositoryImpl magazineRepository = new MagazineRepositoryImpl();
+
         magazine.setId(null);
         magazine.setName(name);
         magazine.setDescription(description);
         magazine.setPrice(price);
-        magazine.setPublishing(publishingRepository.findById(publishingId).orElseThrow());
-        magazineRepository.save(magazine);
-//        DBManager.addMagazine(magazine);
-//        MagazineRepositoryImpl magazineRepository = new MagazineRepositoryImpl();
+        magazine.setPublishing(publishingService.getPublishingById(publishingId));
+        magazineService.addNewMagazine(magazine);
         return "redirect:/magazines";
     }
 
@@ -61,8 +63,10 @@ public class MagazineController {
     String getEditForm(@PathVariable(name = "magazineId") Long magazineId,
                        Model model) {
         log.info("MagazineController, getEditForm, id: " + magazineId);
-        Magazine magazine = new Magazine();
-        magazine = DBManager.getMagazineById(45L);
+//        Magazine magazine = new Magazine();
+//        magazine = DBManager.getMagazineById(45L);
+        magazine = magazineService.getMagazineById(magazineId);
+        model.addAttribute("publishingList", publishingService.getAllPublishings());
         model.addAttribute("magazine", magazine);
         return "magazineDetails";
     }
@@ -71,15 +75,25 @@ public class MagazineController {
     String updateMagazine(@RequestParam(name = "magazineId") Long id,
                           @RequestParam(name = "magazineName") String name,
                           @RequestParam(name = "magazineDescription") String description,
-                          @RequestParam(name = "magazinePrice") double price) {
-        Magazine magazine = new Magazine(id, name, description, price, null);
-        DBManager.updateMagazine(magazine);
+                          @RequestParam(name = "magazinePrice") double price,
+                          @RequestParam(name = "publishing") Long publishingId) {
+//        Magazine magazine = new Magazine(id, name, description, price, null, null);
+//        DBManager.updateMagazine(magazine);
+
+        magazine.setId(id);
+        magazine.setName(name);
+        magazine.setDescription(description);
+        magazine.setPublishing(publishingService.getPublishingById(publishingId));
+        magazine.setPrice(price);
+        magazineService.updateNewMagazine(magazine);
         return "redirect:/magazines";
     }
 
     @GetMapping(value = "/delete/{magazineId}")
     String deleteMagazineById(@PathVariable(name = "magazineId") Long magazineId) {
-        DBManager.deleteMagazine(magazineId);
+//        DBManager.deleteMagazine(magazineId);
+
+        magazineService.deleteMagazineById(magazineId);
         return "redirect:/magazines";
     }
 }

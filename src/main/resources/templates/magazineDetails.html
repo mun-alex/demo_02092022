@@ -8,8 +8,8 @@
 <div layout:fragment="content">
   <div class="row mt-5">
     <div class="col-lg-6">
-      <form th:action="@{'/magazines/update'}" method="post" class="border border-2">
-        <div class="mb-3 p-3">
+      <form th:action="@{'/magazines/update'}" method="post" class="border border-2 rounded p-2">
+        <div class="mb-3">
           <input type="hidden" name="magazineId" th:value="${magazine.id}">
           <label for="magazineName" class="form-label">Name</label>
           <input type="text" class="form-control" id="magazineName" aria-describedby="emailHelp" name="magazineName" th:value="${magazine.name}">
@@ -22,11 +22,14 @@
           <label for="magazinePrice" class="form-label">Price</label>
           <input type="number" class="form-control" id="magazinePrice" name="magazinePrice" th:value="${magazine.price}">
         </div>
-        <div class="modal-footer">
-          <button type="submit" class="btn btn-primary">Add</button>
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <a th:href="@{'/magazines/delete/' + ${magazine.id}}" class="btn btn-danger">Delete</a>
+        <div class="mb-3">
+          <select class="form-select" aria-label="Default select example" name="publishing">
+            <option th:each="publishing : ${publishingList}" th:value="${publishing.id}" th:text="${publishing.name}"></option>
+          </select>
         </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a th:href="@{'/magazines'}" class="btn btn-secondary">Close</a>
+        <a th:href="@{'/magazines/delete/' + ${magazine.id}}" class="btn btn-danger">Delete</a>
       </form>
     </div>
   </div>

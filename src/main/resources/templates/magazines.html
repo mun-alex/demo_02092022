@@ -18,6 +18,7 @@
         <th scope="col">Name</th>
         <th scope="col">Description</th>
         <th scope="col">Price</th>
+        <th scope="col">Categories</th>
         <th scope="col">Details</th>
       </tr>
       </thead>
@@ -28,6 +29,7 @@
         <td th:text="${magazine.description}"></td>
         <td th:if="${magazine.price >= 2000}" style="color: red;" th:text="${magazine.price} + ' KZT'"></td>
         <td th:unless="${magazine.price >= 2000}" style="color: green;" th:text="${magazine.price} + ' KZT'"></td>
+        <td><p th:each="category : ${magazine.getCategories()}" th:text="${category.name}"></p></td>
         <td><a th:href="@{'/magazines/details/' + ${magazine.id}}" class="btn btn-primary">details</a></td>
       </tr>
       </tbody>

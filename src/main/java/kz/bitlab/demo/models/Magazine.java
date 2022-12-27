@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Component
 @Data
@@ -25,4 +26,6 @@ public class Magazine {
     private double price;
     @ManyToOne
     private Publishing publishing;
+    @ManyToMany
+    private List<Category> categories;
 }
